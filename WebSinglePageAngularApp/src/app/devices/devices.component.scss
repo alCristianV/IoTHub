@@ -1,0 +1,36 @@
+.top-borderless td, .top-borderless th{
+    border-top: none;
+}
+
+.no-padding-left td, .no-padding-left th{
+    padding-left: 0px;
+}
+
+.header-font{
+     color: rgb(94, 108, 132);
+}
+
+.text-font{
+    color: rgb(23, 43, 77);
+
+}
+
+.list-link{
+    color: #172b4d;
+    padding: 0px;
+}
+
+.list-link:hover{
+    color: blue;
+}
+
+.inline{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}

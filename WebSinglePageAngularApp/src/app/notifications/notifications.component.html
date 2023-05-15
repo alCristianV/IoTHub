@@ -1,0 +1,17 @@
+<div class="container">
+<h2 class="mt-4 mb-2">Notifications</h2>
+<div *ngFor ="let notification of this.notifications " >
+<mat-expansion-panel hideToggle >
+  <mat-expansion-panel-header class="flex-row-center">
+    <mat-panel-title style="justify-content: flex-start; align-items: center;">
+      {{getFirstLine(notification.text)}}
+    </mat-panel-title>
+    <mat-panel-description style="justify-content: flex-end; align-items: center;">
+      {{notification.date | date :'short'}}
+      <a class="btn-lg btn-default" (click)="this.deleteNotification(notification)"><i class="fa fa-trash"></i></a>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <p class="multiline-text-style">{{notification.text}}</p>
+</mat-expansion-panel>
+</div>
+</div>

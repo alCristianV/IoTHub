@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="inline mt-4 mb-2">
+  <h2 class="mb-0">My Devices</h2>
+  <button type="button" class="btn btn-primary" (click)="openDialog('Add',{})">
+    <i class="fa fa-plus mr-1"></i>Create Device
+  </button>
+</div>
+
+<table class="table table-hover top-borderless no-padding-left">
+  <thead>
+    <th class="header-font" *ngFor = "let column of displayedColumns">
+      {{column}}
+    </th>
+  </thead>
+  <tbody class="text-font">
+    <tr *ngFor = "let device of dataSource" (click)="singleClick(device)">
+      <td>
+        <div>
+        <a class="nav-link list-link" [routerLink]="['/devices/', device.id]">{{device.name}}</a>
+        <small class="text-muted">{{device.user.email}}</small>
+      </div>
+      </td>
+      <td >
+        <div *ngIf="(presence.onlineDevices$ | async).includes(device.id) else elseOffline">
+          <i style="color: rgb(0, 223, 0);" class="fa fa-circle"> Online</i>
+        </div>
+        <ng-template #elseOffline>
+          <i style="color: rgb(185, 185, 185);" class="fa fa-circle"> Offline</i>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>

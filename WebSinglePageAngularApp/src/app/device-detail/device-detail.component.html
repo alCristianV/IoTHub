@@ -1,0 +1,148 @@
+<div class="container">
+  <div *ngIf="this.device">
+    <div class="name-line">
+      <div style="display: flex; align-items: center;">
+      <div *ngIf="(presence.onlineDevices$ | async).includes(this.device.id) else elseOffline">
+        <i style="color: rgb(0, 223, 0);" class="fa fa-circle pr-2" title="Online"></i>
+      </div>
+      <ng-template #elseOffline>
+        <i style="color: rgb(185, 185, 185);" class="fa fa-circle pr-2"  title="Offline"></i>
+      </ng-template>
+    <app-edit-input [data]='device?.name' (focusOut)='saveName($event)'></app-edit-input>
+  </div>
+    <a class="btn-lg btn-default" (click)="deleteDevice()"><i class="fa fa-trash"></i></a>
+  </div>
+    <label for="connectionString"><h2 class="mb-0">Connection String</h2></label>
+    <div class="input-group mb-3">
+      <input
+      id="connectionString"
+        type="password"
+        class="form-control"
+        [(ngModel)]="device.connectionString"
+        name="connectionString"
+        readonly
+      />
+      <div class="input-group-append">
+        <button class="btn btn-primary style" type="button" (click) = "copyConnectionString()">
+          <i class="fa fa-copy"></i>
+        </button>
+      </div>
+    </div>
+    
+  <div>
+    <div class="inline-space mt-4 mb-2">
+    <h2 class="mb-0">Messages</h2>
+    <button type="button" class="btn btn-primary style" (click)="openFieldDialog('Add',{})">
+      <i class="fa fa-plus mr-1"></i>Create Field
+    </button>
+  </div>
+
+    <div *ngIf="this.device.fields?.length != 0; else elseFields">
+    <table class="table table-hover top-borderless no-padding-left">
+      <thead>
+        <th  class="header-font" *ngFor = "let column of messagesColumns">
+          {{column}}
+        </th>
+      </thead>
+      <tbody class="text-font">
+        <tr *ngFor = "let field of this.device.fields" >
+          <td>
+            <div>
+            <!-- <p >{{field.name}}</p> -->
+            <a class="nav-link list-link" [routerLink]="['/devices/', device.id, 'statistics', field.id]">{{field.name}}</a>
+            <!-- <small class="text-muted">{{field.type}}</small> -->
+          </div>
+          </td>
+          <td >
+            <div *ngIf="field?.error == null; else elseError">
+            <p>{{this.getMessageValue(field.name)}}</p>
+             <!-- <small class="text-muted">{{this.getMessageDate() | date :'short'}}</small> -->
+            </div> 
+            <ng-template #elseError>
+              <p class="error">Error: {{field?.error}}</p>
+            </ng-template> 
+          </td>
+          <td style="text-align: right" > 
+            <div class="inline">
+            <a  class="nav-link list-link" (click)="openFieldDialog('Update',field)">Edit</a>
+            <p> - </p>
+            <a  class="nav-link list-link" (click)="openFieldDialog('Delete',field)">Delete</a>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <ng-template #elseFields>
+      <p class="d-flex justify-content-center header-font">No Data Fields Yet...</p>
+    </ng-template>
+
+  
+  <div>
+    <div class="inline-space mt-4 mb-2">
+    <h2 class="mb-0">Actions</h2>
+    <button type="button" class="btn btn-primary style" (click)="openActionDialog('Add',{})">
+      <i class="fa fa-plus mr-1"></i>Create Action
+    </button>
+  </div>
+  <div *ngIf="this.device.actions?.length != 0; else elseActions">
+    <table class="table table-hover top-borderless no-padding-left">
+      <thead>
+        <th class="header-font" *ngFor = "let column of actionsColumns">
+          {{column}}
+        </th>
+      </thead>
+      <tbody class="text-font">
+        <tr *ngFor = "let action of this.device.actions" >
+          <td>
+            <a class="nav-link list-link" (click)="invokeAction(action)"><p>{{action.name}}</p></a>
+          </td>
+          <td style="text-align: right"> 
+            <div class="inline">
+            <a  class="nav-link list-link" (click)="openActionDialog('Update',action)">Edit</a>
+            <p> - </p>
+            <a  class="nav-link list-link" (click)="openActionDialog('Delete',action)">Delete</a>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+     
+    </table>
+  </div>
+  <ng-template #elseActions>
+    <p class="d-flex justify-content-center header-font">No Actions Yet...</p>
+  </ng-template>
+  
+  
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+           Collaborators      
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- <input placeholder="Field Name" class="form-control mt-2 mb-2 " matInput> -->
+      <div class="input-group mb-3">
+        <input
+          class="form-control"
+          name="connectionString"
+          placeholder="Collaborator Email"
+          [(ngModel)]="this.collaboratorEmail"
+          autocomplete="off"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-primary style" type="button" (click)="this.addCollaborator()">
+          +</button>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between;" *ngFor = "let collab of this.device.collaborators">
+      <p>{{collab.email}} </p>
+      <a  class="nav-link list-link" (click)="this.removeCollaborator(collab)">Remove</a>
+    </div>
+    
+    </mat-expansion-panel>
+    
+  </mat-accordion>
+
+</div>

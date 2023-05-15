@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="name-line mt-4 mb-2">
+    <a class="btn-lg btn-default" (click)="backClicked()"><i class="fa fa-arrow-left"></i></a>
+    <h2 class=" mb-0">{{this.fieldName}} Field Statistics</h2>
+    <select class="custom-select" (change)='onOptionsSelected(mySelect.value)' #mySelect id="inputGroupSelect">
+      <option value=0>Daily</option>
+      <option value=1>Weekly</option>
+      <option value=2>Monthly</option>
+    </select>
+  </div>
+  <canvas baseChart 
+      [datasets]="lineChartData" 
+      [labels]="lineChartLabels" 
+      [options]="lineChartOptions"
+      [colors]="lineChartColors" 
+      [legend]="lineChartLegend" 
+      [chartType]="lineChartType" 
+      [plugins]="lineChartPlugins">
+  </canvas>
+</div>

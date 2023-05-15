@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Add Device</h1>
+<div mat-dialog-content>
+
+    <input placeholder="Device Name" spellcheck="false" class="form-control mt-2 mb-2 " required matInput [(ngModel)]="local_data.name">
+
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="btn btn-primary mr-1" (click)="doAction()">{{action}}</button>
+  <button mat-button class="btn btn-primary ml-1 " (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+</div>
