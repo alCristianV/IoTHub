@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+
+    auth:
+        container_name: auth
+        image: cristian25/authservice:1.0
+        build:
+            context: ./AuthService
+            dockerfile: ./AuthService/Dockerfile
+        ports:
+            - "5178:80"  
+        restart: on-failure
+        volumes:
+            - ./.aspnet/auth/DataProtection-Keys:/root/.aspnet/auth/DataProtection-Keys
+        networks:
+            - iothub-network
+        
+networks:
+    iothub-network:
