@@ -9,10 +9,24 @@ services:
             context: ./AuthService
             dockerfile: ./AuthService/Dockerfile
         ports:
-            - "5178:80"  
+            - "8080:80"  
         restart: on-failure
         volumes:
             - ./.aspnet/auth/DataProtection-Keys:/root/.aspnet/auth/DataProtection-Keys
+        networks:
+            - iothub-network
+
+    users:
+        container_name: users
+        image: cristian25/usersservice:1.0
+        build:
+            context: ./UsersService
+            dockerfile: ./UsersService/Dockerfile
+        ports:
+            - "8081:80"  
+        restart: on-failure
+        volumes:
+            - ./.aspnet/users/DataProtection-Keys:/root/.aspnet/users/DataProtection-Keys
         networks:
             - iothub-network
         
