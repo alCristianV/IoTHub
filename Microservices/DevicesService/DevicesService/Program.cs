@@ -1,4 +1,5 @@
 using IoTHubAPI.DatabaseSettings;
+using IoTHubAPI.Helpers;
 using IoTHubAPI.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
@@ -13,11 +14,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.Configure<IotHubDatabaseSettings>(
                 builder.Configuration.GetSection(nameof(IotHubDatabaseSettings)));
 builder.Services.AddSingleton<IIotHubDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<IotHubDatabaseSettings>>().Value);
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+builder.Services.AddScoped<IDeviceDataFieldRepository, DeviceDataFieldRepository>();
+builder.Services.AddScoped<IActionRepository, ActionRepository>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

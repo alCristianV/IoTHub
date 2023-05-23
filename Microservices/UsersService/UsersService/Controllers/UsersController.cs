@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using IoTHubAPI.Models;
+using IoTHubAPI.Models.Dtos;
 using IoTHubAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,6 @@ namespace IoTHubAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _usersRepo;
-        private readonly IMapper _mapper;
         public UsersController(IUserRepository usersRepo) {
             _usersRepo = usersRepo;
         }
@@ -36,13 +36,29 @@ namespace IoTHubAPI.Controllers
         }
 
         [ProducesResponseType(typeof(User), (int)HttpStatusCode.OK)]
-        [HttpGet("{id:length(24)}", Name = "GetUser")]
+        [HttpGet("{userId:length(24)}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(string userId) {
             var user = await _usersRepo.GetUser(userId);
 
-            //var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+            //var userToReturn = _mapper.Map<UserForListDto>(user);
 
             if(user == null) {
+                return NoContent();
+            }
+
+            return Ok(user);
+        }
+
+        [ProducesResponseType(typeof(User), (int)HttpStatusCode.OK)]
+        [HttpGet("GetUserByEmail", Name = "GetUserByEmail")]
+        public async Task<IActionResult> GetUserByEmail([FromBody] string email)
+        {
+            var user = await _usersRepo.GetUserByEmail(email);
+
+            //var userToReturn = _mapper.Map<UserForListDto>(user);
+
+            if (user == null)
+            {
                 return NoContent();
             }
 

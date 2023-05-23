@@ -17,7 +17,8 @@ builder.Services.Configure<IotHubDatabaseSettings>(
                 builder.Configuration.GetSection(nameof(IotHubDatabaseSettings)));
 builder.Services.AddSingleton<IIotHubDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<IotHubDatabaseSettings>>().Value);
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

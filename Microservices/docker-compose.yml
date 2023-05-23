@@ -29,6 +29,34 @@ services:
             - ./.aspnet/users/DataProtection-Keys:/root/.aspnet/users/DataProtection-Keys
         networks:
             - iothub-network
+            
+    devices:
+        container_name: devices
+        image: cristian25/devicesservice:1.0
+        build:
+            context: ./DevicesService
+            dockerfile: ./DevicesService/Dockerfile
+        ports:
+            - "8082:80"  
+        restart: on-failure
+        volumes:
+            - ./.aspnet/devices/DataProtection-Keys:/root/.aspnet/devices/DataProtection-Keys
+        networks:
+            - iothub-network
+            
+    notifications:
+        container_name: notifications
+        image: cristian25/notificationsservice:1.0
+        build:
+            context: ./NotificationService
+            dockerfile: ./NotificationService/Dockerfile
+        ports:
+            - "8083:80"  
+        restart: on-failure
+        volumes:
+            - ./.aspnet/notifications/DataProtection-Keys:/root/.aspnet/notifications/DataProtection-Keys
+        networks:
+            - iothub-network
         
 networks:
     iothub-network:
