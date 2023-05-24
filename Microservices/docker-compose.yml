@@ -57,6 +57,20 @@ services:
             - ./.aspnet/notifications/DataProtection-Keys:/root/.aspnet/notifications/DataProtection-Keys
         networks:
             - iothub-network
+            
+    statistics:
+        container_name: statistics
+        image: cristian25/statisticsservice:1.0
+        build:
+            context: ./StatisticsService
+            dockerfile: ./StatisticsService/Dockerfile
+        ports:
+            - "8084:80"  
+        restart: on-failure
+        volumes:
+            - ./.aspnet/statistics/DataProtection-Keys:/root/.aspnet/statistics/DataProtection-Keys
+        networks:
+            - iothub-network
         
 networks:
     iothub-network:

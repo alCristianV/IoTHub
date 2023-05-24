@@ -3,20 +3,19 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["TestDocker/TestDocker.csproj", "TestDocker/"]
-RUN dotnet restore "TestDocker/TestDocker.csproj"
+COPY ["MessagesService/MessagesService.csproj", "MessagesService/"]
+RUN dotnet restore "MessagesService/MessagesService.csproj"
 COPY . .
-WORKDIR "/src/TestDocker"
-RUN dotnet build "TestDocker.csproj" -c Release -o /app/build
+WORKDIR "/src/MessagesService"
+RUN dotnet build "MessagesService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TestDocker.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "MessagesService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TestDocker.dll"]
+ENTRYPOINT ["dotnet", "MessagesService.dll"]

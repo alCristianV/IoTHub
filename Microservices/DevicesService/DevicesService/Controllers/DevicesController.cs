@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System.Net;
 using System.Security.Claims;
+using System.Text;
 
 namespace IoTHubAPI.Controllers
 {
@@ -539,10 +540,11 @@ namespace IoTHubAPI.Controllers
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri(_notificationsServiceUrl),
-                Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(notification))
+                RequestUri = new Uri(_notificationsServiceUrl + "addNotification"),
+                Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(notification), Encoding.UTF8, "application/json")
             };
-
+            Console.WriteLine(notification.Id);
+            Console.WriteLine(request);
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             Console.WriteLine(response);
             var responseContent = await response.Content.ReadAsStringAsync();

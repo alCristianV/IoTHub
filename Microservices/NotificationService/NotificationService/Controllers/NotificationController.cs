@@ -39,8 +39,9 @@ namespace IoTHubAPI.Controllers
         }
 
         [HttpPost("addNotification")]
-        public async Task<IActionResult> AddNotification(Notification notification)
+        public async Task<IActionResult> AddNotification(NotificationForAdd notificationForAdd)
         {
+            Notification notification = new Notification() { Text= notificationForAdd.Text, Date= notificationForAdd.Date, UserId=notificationForAdd.UserId };
             Notification addedNotification = await _notificationRepository.AddNotification(notification);
 
             return StatusCode(StatusCodes.Status201Created, addedNotification);
