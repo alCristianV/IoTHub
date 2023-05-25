@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
 
@@ -65,7 +65,7 @@ services:
             context: ./StatisticsService
             dockerfile: ./StatisticsService/Dockerfile
         ports:
-            - "8084:80"  
+            - "8085:80"  
         restart: on-failure
         volumes:
             - ./.aspnet/statistics/DataProtection-Keys:/root/.aspnet/statistics/DataProtection-Keys
