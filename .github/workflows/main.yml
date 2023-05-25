@@ -16,6 +16,7 @@ jobs:
     
       - name: Start dependencies (docker-compose)
         run: |
+          working-directory: ./Microservices
           docker-compose up -d  
 
       - name: Install .NET Core SDK
@@ -24,8 +25,10 @@ jobs:
           dotnet-version: '6.0.x'
     
       - name: Restore NuGet packages
+        working-directory: ./Microservices
         run: dotnet restore
 
       - name: Build
+        working-directory: ./Microservices
         run: dotnet build -c Release --no-restore
 
