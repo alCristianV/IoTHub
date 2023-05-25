@@ -24,10 +24,10 @@ jobs:
         with:
           dotnet-version: '6.0.x'
     
-      - name: Restore NuGet packages
+      - name: Restore NuGet packages Auth
         run: dotnet restore
-        working-directory: ./Microservices
+        working-directory: ./Microservices/AuthService
         
       - name: Build
         run: dotnet build -c Release --no-restore
-        working-directory: ./Microservices
+        working-directory: ./Microservices/AuthService
