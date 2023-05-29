@@ -1,0 +1,8 @@
+-- staging
+docker compose --file docker-compose-staging.yml build
+docker compose --file docker-compose-staging.yml up -d
+
+
+-- staging
+docker compose --file docker-compose-production.yml build
+docker compose --file docker-compose-production.yml up -d

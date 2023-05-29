@@ -10,6 +10,8 @@ services:
             dockerfile: ./AuthService/Dockerfile
         ports:
             - "8080:80"  
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./.aspnet/auth/DataProtection-Keys:/root/.aspnet/auth/DataProtection-Keys
@@ -24,6 +26,8 @@ services:
             dockerfile: ./UsersService/Dockerfile
         ports:
             - "8081:80"  
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./.aspnet/users/DataProtection-Keys:/root/.aspnet/users/DataProtection-Keys
@@ -38,6 +42,8 @@ services:
             dockerfile: ./DevicesService/Dockerfile
         ports:
             - "8082:80"  
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./.aspnet/devices/DataProtection-Keys:/root/.aspnet/devices/DataProtection-Keys
@@ -52,6 +58,8 @@ services:
             dockerfile: ./NotificationService/Dockerfile
         ports:
             - "8083:80"  
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./.aspnet/notifications/DataProtection-Keys:/root/.aspnet/notifications/DataProtection-Keys
@@ -66,6 +74,8 @@ services:
             dockerfile: ./StatisticsService/Dockerfile
         ports:
             - "8085:80"  
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./.aspnet/statistics/DataProtection-Keys:/root/.aspnet/statistics/DataProtection-Keys
