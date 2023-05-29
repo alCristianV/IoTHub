@@ -73,7 +73,7 @@ jobs:
         working-directory: ./Microservices/UsersService
         
       - name: Publish Devices
-        run: dotnet publish -c Release--no-build --no-restore
+        run: dotnet publish -c Release --no-build --no-restore
         working-directory: ./Microservices/DevicesService
         
       - name: Publish Notifications
