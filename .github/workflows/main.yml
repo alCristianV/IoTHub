@@ -27,7 +27,60 @@ jobs:
       - name: Restore NuGet packages Auth
         run: dotnet restore
         working-directory: ./Microservices/AuthService
+          
+      - name: Restore NuGet packages Users
+        run: dotnet restore
+        working-directory: ./Microservices/UsersService
         
-      - name: Build
+      - name: Restore NuGet packages Devices
+        run: dotnet restore
+        working-directory: ./Microservices/DevicesService
+        
+      - name: Restore NuGet packages Notifications
+        run: dotnet restore
+        working-directory: ./Microservices/NotificationService
+        
+      - name: Restore NuGet packages Statistics
+        run: dotnet restore
+        working-directory: ./Microservices/StatisticsService
+        
+      - name: Build Auth
         run: dotnet build -c Release --no-restore
         working-directory: ./Microservices/AuthService
+        
+      - name: Build Users
+        run: dotnet build -c Release --no-restore
+        working-directory: ./Microservices/UsersService
+        
+      - name: Build Devices
+        run: dotnet build -c Release --no-restore
+        working-directory: ./Microservices/DevicesService
+        
+      - name: Build Notifications
+        run: dotnet build -c Release --no-restore
+        working-directory: ./Microservices/NotificationService
+        
+      - name: Builds Statistics
+        run: dotnet build -c Release --no-restore
+        working-directory: ./Microservices/StatisticsService
+        
+      - name: Publish Auth
+        run: dotnet publish -c Release --no-build --no-restore
+        working-directory: ./Microservices/AuthService
+        
+      - name: Publish Users
+        run: dotnet publish -c Release --no-build --no-restore
+        working-directory: ./Microservices/UsersService
+        
+      - name: Publish Devices
+        run: dotnet publish -c Release--no-build --no-restore
+        working-directory: ./Microservices/DevicesService
+        
+      - name: Publish Notifications
+        run: dotnet publish -c Release --no-build --no-restore
+        working-directory: ./Microservices/NotificationService
+        
+      - name: Publish Statistics
+        run: dotnet publish -c Release --no-build --no-restore
+        working-directory: ./Microservices/StatisticsService
+
