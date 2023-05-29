@@ -6,15 +6,15 @@ services:
         container_name: auth
         image: cristian25/authservice:1.0
         build:
-            context: ./AuthService
-            dockerfile: ./AuthService/Dockerfile
+            context: .Microservices/AuthService
+            dockerfile: .Microservices/AuthService/Dockerfile
         ports:
             - "8080:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Staging
+            - ASPNETCORE_ENVIRONMENT=Production
         restart: on-failure
         volumes:
-            - ./.aspnet/auth/DataProtection-Keys:/root/.aspnet/auth/DataProtection-Keys
+            - .Microservices/.aspnet/auth/DataProtection-Keys:/root/.aspnet/auth/DataProtection-Keys
         networks:
             - iothub-network
 
@@ -22,15 +22,15 @@ services:
         container_name: users
         image: cristian25/usersservice:1.0
         build:
-            context: ./UsersService
-            dockerfile: ./UsersService/Dockerfile
+            context: .Microservices/UsersService
+            dockerfile: .Microservices/UsersService/Dockerfile
         ports:
             - "8081:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Staging
+            - ASPNETCORE_ENVIRONMENT=Production
         restart: on-failure
         volumes:
-            - ./.aspnet/users/DataProtection-Keys:/root/.aspnet/users/DataProtection-Keys
+            - .Microservices/.aspnet/users/DataProtection-Keys:/root/.aspnet/users/DataProtection-Keys
         networks:
             - iothub-network
             
@@ -38,15 +38,15 @@ services:
         container_name: devices
         image: cristian25/devicesservice:1.0
         build:
-            context: ./DevicesService
-            dockerfile: ./DevicesService/Dockerfile
+            context: .Microservices/DevicesService
+            dockerfile: .Microservices/DevicesService/Dockerfile
         ports:
             - "8082:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Staging
+            - ASPNETCORE_ENVIRONMENT=Production
         restart: on-failure
         volumes:
-            - ./.aspnet/devices/DataProtection-Keys:/root/.aspnet/devices/DataProtection-Keys
+            - .Microservices/.aspnet/devices/DataProtection-Keys:/root/.aspnet/devices/DataProtection-Keys
         networks:
             - iothub-network
             
@@ -54,15 +54,15 @@ services:
         container_name: notifications
         image: cristian25/notificationsservice:1.0
         build:
-            context: ./NotificationService
-            dockerfile: ./NotificationService/Dockerfile
+            context: .Microservices/NotificationService
+            dockerfile: .Microservices/NotificationService/Dockerfile
         ports:
             - "8083:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Staging
+            - ASPNETCORE_ENVIRONMENT=Production
         restart: on-failure
         volumes:
-            - ./.aspnet/notifications/DataProtection-Keys:/root/.aspnet/notifications/DataProtection-Keys
+            - .Microservices/.aspnet/notifications/DataProtection-Keys:/root/.aspnet/notifications/DataProtection-Keys
         networks:
             - iothub-network
             
@@ -70,18 +70,17 @@ services:
         container_name: statistics
         image: cristian25/statisticsservice:1.0
         build:
-            context: ./StatisticsService
-            dockerfile: ./StatisticsService/Dockerfile
+            context: .Microservices/StatisticsService
+            dockerfile: .Microservices/StatisticsService/Dockerfile
         ports:
             - "8085:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Staging
+            - ASPNETCORE_ENVIRONMENT=Production
         restart: on-failure
         volumes:
-            - ./.aspnet/statistics/DataProtection-Keys:/root/.aspnet/statistics/DataProtection-Keys
+            - .Microservices/.aspnet/statistics/DataProtection-Keys:/root/.aspnet/statistics/DataProtection-Keys
         networks:
             - iothub-network
-           
         
 networks:
     iothub-network:

@@ -7,18 +7,23 @@ import { Observable } from 'rxjs';
 export enum StatisticsType {
   Daily,
   Weekly,
-  Monthly
+  Monthly,
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StatisticsService {
-  baseUrl = environment.apiUrl + 'statistics/';
-  constructor(private http: HttpClient) { }
-  
-  getStatistics(deviceId: string, fieldId: string, statisticsType: StatisticsType): Observable<any> {
-    return this.http.get<StatisticsEntry[]>(this.baseUrl + deviceId + '/' + fieldId + '/' + statisticsType);
-  }
+  baseUrl = environment.statisticsService;
+  constructor(private http: HttpClient) {}
 
+  getStatistics(
+    deviceId: string,
+    fieldId: string,
+    statisticsType: StatisticsType
+  ): Observable<any> {
+    return this.http.get<StatisticsEntry[]>(
+      this.baseUrl + deviceId + '/' + fieldId + '/' + statisticsType
+    );
+  }
 }

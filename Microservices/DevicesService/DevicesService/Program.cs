@@ -1,6 +1,7 @@
 using IoTHubAPI.DatabaseSettings;
 using IoTHubAPI.Helpers;
 using IoTHubAPI.Repositories;
+using IoTHubAPI.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -60,8 +61,19 @@ app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
 
+builder.Services.AddSignalR();
+
+app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<PresenceHub>("hubs/presence");
+    endpoints.MapHub<MessageHub>("hubs/message");
+});
 
 app.MapControllers();
 
