@@ -82,7 +82,7 @@ namespace IoTHubAPI.Controllers
             foreach (var device in devices)
             {
                 DeviceForListDto deviceToAdd = _mapper.Map<DeviceForListDto>(device);
-                deviceToAdd.User = _mapper.Map<UserForListDto>(await this.GetUserById(userId));
+                deviceToAdd.User = _mapper.Map<UserForListDto>(user);
                 devicesForList.Add(deviceToAdd);
             }
             return Ok(devicesForList);

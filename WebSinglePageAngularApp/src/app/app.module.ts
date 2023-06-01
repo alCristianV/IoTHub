@@ -19,7 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DeviceDetailComponent } from './device-detail/device-detail.component';
 import { AuthService } from './_services/auth.service';
 import { AlertifyService } from './_services/alertify.service';
@@ -27,8 +27,8 @@ import { DeviceDetailResolver } from './_resolvers/device-detail.resolver';
 import { DevicesListResolver } from './_resolvers/devices-list.resolver';
 import { EditInputComponent } from './edit-input/edit-input.component';
 import { AutofocusDirective } from './edit-input/autofocus.directive';
-import { FieldDialogBoxComponent } from './device-detail/field-dialog-box/field-dialog-box.component'
-import { ActionDialogBoxComponent } from './device-detail/action-dialog-box/action-dialog-box.component'
+import { FieldDialogBoxComponent } from './device-detail/field-dialog-box/field-dialog-box.component';
+import { ActionDialogBoxComponent } from './device-detail/action-dialog-box/action-dialog-box.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { LoadingScreenInterceptor } from './loading-screen/loading.interceptor';
@@ -36,14 +36,14 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { NotificationResolver } from './_resolvers/notifications.resolver';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { StatisticsResolver } from './_resolvers/statistics.resolver';
+import { environment } from 'src/environments/environment';
 
-
-export function tokenGetter(){
-  return localStorage.getItem('token')
+export function tokenGetter() {
+  return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [			
+  declarations: [
     AppComponent,
     NavComponent,
     HomeComponent,
@@ -55,10 +55,10 @@ export function tokenGetter(){
     AutofocusDirective,
     FieldDialogBoxComponent,
     ActionDialogBoxComponent,
-      LoadingScreenComponent,
-      NotificationsComponent,
-      StatisticsComponent
-   ],
+    LoadingScreenComponent,
+    NotificationsComponent,
+    StatisticsComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -74,20 +74,28 @@ export function tokenGetter(){
     MatExpansionModule,
     ClipboardModule,
     JwtModule.forRoot({
-      config:{
+      config: {
         tokenGetter: tokenGetter,
         // allowedDomains: ['192.168.0.104:5000'],
         // disallowedRoutes: ['192.168.0.104:5000/api/auth']
-        allowedDomains: ['localhost:5000'],
-        disallowedRoutes: ['localhost:5000/api/auth']
-      }
-    })
+        //allowedDomains: ['localhost:8082'],
+        allowedDomains: [
+          environment.authDomain,
+          environment.usersDomain,
+          environment.devicesDomain,
+          environment.statisticsDomain,
+          environment.statisticsDomain,
+          environment.notificationDomain,
+        ],
+        disallowedRoutes: [environment.authService],
+      },
+    }),
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingScreenInterceptor,
-      multi: true
+      multi: true,
     },
     ErrorInterceptorProvider,
     AuthService,
@@ -95,8 +103,7 @@ export function tokenGetter(){
     DeviceDetailResolver,
     DevicesListResolver,
     NotificationResolver,
-    StatisticsResolver
-    
+    StatisticsResolver,
   ],
   bootstrap: [AppComponent],
 })

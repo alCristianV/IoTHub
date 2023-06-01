@@ -4,7 +4,7 @@ namespace IoTHubAPI.Models.Dtos
 {
     public class DeviceDataFieldDto
     {
-        public string DeviceId { get; set; }
+        public string? DeviceId { get; set; }
 
         [Required]
         public string Name { get; set; }
