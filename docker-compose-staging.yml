@@ -11,7 +11,7 @@ services:
         ports:
             - "8080:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./Microservices/.aspnet/auth/DataProtection-Keys:/root/.aspnet/auth/DataProtection-Keys
@@ -27,7 +27,7 @@ services:
         ports:
             - "8081:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./Microservices/.aspnet/users/DataProtection-Keys:/root/.aspnet/users/DataProtection-Keys
@@ -43,7 +43,7 @@ services:
         ports:
             - "8082:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./Microservices/.aspnet/devices/DataProtection-Keys:/root/.aspnet/devices/DataProtection-Keys
@@ -59,7 +59,7 @@ services:
         ports:
             - "8083:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./Microservices/.aspnet/notifications/DataProtection-Keys:/root/.aspnet/notifications/DataProtection-Keys
@@ -75,7 +75,7 @@ services:
         ports:
             - "8085:80"  
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
         restart: on-failure
         volumes:
             - ./Microservices/.aspnet/statistics/DataProtection-Keys:/root/.aspnet/statistics/DataProtection-Keys
@@ -87,7 +87,7 @@ services:
         image: cristian25/frontendapp:1.0
         build:
             context: ./WebSinglePageAngularApp/
-            dockerfile: ./Dockerfile
+            dockerfile: ./Dockerfile.staging
         ports:
             - "4200:80"  
         restart: on-failure

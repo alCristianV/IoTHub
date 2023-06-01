@@ -72,7 +72,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapHub<PresenceHub>("hubs/presence");
-    endpoints.MapHus<MessageHub>("hubs/message");
+    endpoints.MapHub<MessageHub>("hubs/message");
 });
 
 app.MapControllers();
