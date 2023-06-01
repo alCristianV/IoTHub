@@ -50,6 +50,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 builder.Services.AddCors();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -61,8 +62,7 @@ app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
 
-builder.Services.AddSignalR();
-
+app.UseRouting();
 app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyMethod().AllowAnyHeader());
 app.UseAuthentication();
 app.UseAuthorization();
@@ -72,7 +72,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapHub<PresenceHub>("hubs/presence");
-    endpoints.MapHub<MessageHub>("hubs/message");
+    endpoints.MapHus<MessageHub>("hubs/message");
 });
 
 app.MapControllers();
