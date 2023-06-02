@@ -84,12 +84,12 @@ jobs:
         
         # Deploy to Azure
         
-      - name: Azure Login
+      - name: Azure Login FrontEnd
         uses: azure/login@v1
         with:
           creds: ${{ secrets.IOTHUBFRONTEND_AZURE_CREDENTIALS }}
           
-      - name: Build and push container image to registry
+      - name: Build and push container image to registry FrontEnd
         uses: azure/container-apps-deploy-action@v1
         with:
           appSourcePath: ${{ github.workspace }}/WebSinglePageAngularApp
@@ -100,5 +100,23 @@ jobs:
           resourceGroup: disertatie
           imageToBuild: cristian25/iothub-frontend:${{ github.sha }}
           dockerfilePath: Dockerfile.linux.dev
+        
+        
+      - name: Azure Login Auth Service
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AUTHSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry Auth Service
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/Microservices/AuthService
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.AUTHSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AUTHSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: authservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/authservice:${{ github.sha }}
+          dockerfilePath: /AuthService/Dockerfile
           
       
