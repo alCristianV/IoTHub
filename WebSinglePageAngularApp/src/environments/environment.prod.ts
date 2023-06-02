@@ -11,8 +11,10 @@ export const environment = {
   usersService:
     'https://usersservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/users/',
 
-  devicesDomain: 'localhost:8082',
-  devicesService: 'http://localhost:8082/api/devices/',
+  devicesDomain:
+    'devicesservice.greenflower-4193fb10.northeurope.azurecontainerapps.io',
+  devicesService:
+    'https://devicesservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/devices/',
 
   notificationsDomain: 'localhost:8083',
   notificationsService: 'http://localhost:8083/api/notifications/',
