@@ -137,4 +137,21 @@ jobs:
           imageToBuild: cristian25/usersservice:${{ github.sha }}
           dockerfilePath: /UsersService/Dockerfile
           
+          
+      - name: Azure Login Devices Service
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEVICESSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry Devices Service
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/Microservices/DevicesService
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.DEVICESSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.DEVICESSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: devicesservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/devicesservice:${{ github.sha }}
+          dockerfilePath: /DevicesService/Dockerfile
       
