@@ -119,4 +119,22 @@ jobs:
           imageToBuild: cristian25/authservice:${{ github.sha }}
           dockerfilePath: /AuthService/Dockerfile
           
+          
+      - name: Azure Login Users Service
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.USERSSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/Microservices/UsersService
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.USERSSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.USERSSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: usersservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/usersservice:${{ github.sha }}
+          dockerfilePath: /UsersService/Dockerfile
+          
       
