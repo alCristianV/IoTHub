@@ -1,0 +1,42 @@
+name: Trigger auto deployment for authservice
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/authservice-AutoDeployTrigger-2ad29d16-2660-4df4-84be-bc530fbdde99.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AUTHSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.AUTHSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AUTHSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: authservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/authservice:${{ github.sha }}
+          
+
+     
+

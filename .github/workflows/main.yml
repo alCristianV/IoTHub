@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -16,8 +14,8 @@ jobs:
     
       - name: Start dependencies (docker-compose)
         run: |
-          docker-compose up -d  
-        working-directory: ./Microservices
+          docker compose --file docker-compose-staging.yml up -d 
+        working-directory: .
 
       - name: Install .NET Core SDK
         uses: actions/setup-dotnet@v1
@@ -83,4 +81,42 @@ jobs:
       - name: Publish Statistics
         run: dotnet publish -c Release --no-build --no-restore
         working-directory: ./Microservices/StatisticsService
+        
+        # Deploy to Azure
+        
+      - name: Azure Login FrontEnd
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.IOTHUBFRONTEND_AZURE_CREDENTIALS }}
+          
+      - name: Build and push container image to registry FrontEnd
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/WebSinglePageAngularApp
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.IOTHUBFRONTEND_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.IOTHUBFRONTEND_REGISTRY_PASSWORD }}
+          containerAppName: iothub-frontend
+          resourceGroup: disertatie
+          imageToBuild: cristian25/iothub-frontend:${{ github.sha }}
+          dockerfilePath: Dockerfile.linux.dev
+        
+        
+      - name: Azure Login Auth Service
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AUTHSERVICE_AZURE_CREDENTIALS }}
 
+      - name: Build and push container image to registry Auth Service
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/Microservices/AuthService
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.AUTHSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AUTHSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: authservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/authservice:${{ github.sha }}
+          dockerfilePath: /AuthService/Dockerfile
+          
+      
