@@ -6,8 +6,10 @@ export const environment = {
   authService:
     'https://authservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/auth/',
 
-  usersDomain: 'localhost:8081',
-  usersService: 'http://localhost:8081/api/users/',
+  usersDomain:
+    'usersservice.greenflower-4193fb10.northeurope.azurecontainerapps.io',
+  usersService:
+    'https://usersservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/users/',
 
   devicesDomain: 'localhost:8082',
   devicesService: 'http://localhost:8082/api/devices/',
