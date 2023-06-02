@@ -4,7 +4,7 @@ services:
 
     auth:
         container_name: auth
-        image: cristian25/authservice:1.0
+        image: cristian25/authservice:latest
         build:
             context: ./Microservices/AuthService
             dockerfile: ./AuthService/Dockerfile
@@ -20,7 +20,7 @@ services:
 
     users:
         container_name: users
-        image: cristian25/usersservice:1.0
+        image: cristian25/usersservice:latest
         build:
             context: ./Microservices/UsersService
             dockerfile: ./UsersService/Dockerfile
@@ -36,7 +36,7 @@ services:
             
     devices:
         container_name: devices
-        image: cristian25/devicesservice:1.0
+        image: cristian25/devicesservice:latest
         build:
             context: ./Microservices/DevicesService
             dockerfile: ./DevicesService/Dockerfile
@@ -52,7 +52,7 @@ services:
             
     notifications:
         container_name: notifications
-        image: cristian25/notificationsservice:1.0
+        image: cristian25/notificationsservice:latest
         build:
             context: ./Microservices/NotificationService
             dockerfile: ./NotificationService/Dockerfile
@@ -68,7 +68,7 @@ services:
             
     statistics:
         container_name: statistics
-        image: cristian25/statisticsservice:1.0
+        image: cristian25/statisticsservice:latest
         build:
             context: ./Microservices/StatisticsService
             dockerfile: ./StatisticsService/Dockerfile
@@ -84,10 +84,10 @@ services:
             
     frontend:
         container_name: frontend
-        image: cristian25/frontendapp:1.0
+        image: cristian25/frontendapp:latest
         build:
             context: ./WebSinglePageAngularApp/
-            dockerfile: ./Dockerfile.staging
+            dockerfile: ./Dockerfile.linux.staging
         ports:
             - "4200:80"  
         restart: on-failure

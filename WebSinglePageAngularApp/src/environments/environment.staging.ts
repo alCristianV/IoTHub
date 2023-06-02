@@ -6,7 +6,7 @@ export const environment = {
   usersDomain: 'users:80',
   usersService: 'http://users:80/api/users/',
 
-  deviceDomain: 'devices:80',
+  devicesDomain: 'devices:80',
   devicesService: 'http://devices:80/api/devices/',
 
   notificationsDomain: 'notifications:80',

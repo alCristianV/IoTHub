@@ -14,7 +14,7 @@ export const environment = {
   devicesDomain: 'localhost:8082',
   devicesService: 'http://localhost:8082/api/devices/',
 
-  notificationDomain: 'localhost:8083',
+  notificationsDomain: 'localhost:8083',
   notificationsService: 'http://localhost:8083/api/notifications/',
 
   statisticsDomain: 'localhost:8085',

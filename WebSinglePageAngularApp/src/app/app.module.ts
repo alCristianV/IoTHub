@@ -85,7 +85,7 @@ export function tokenGetter() {
           environment.devicesDomain,
           environment.statisticsDomain,
           environment.statisticsDomain,
-          environment.notificationDomain,
+          environment.notificationsDomain,
         ],
         disallowedRoutes: [environment.authService],
       },
