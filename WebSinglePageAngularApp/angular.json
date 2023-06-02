@@ -34,7 +34,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "prod": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -126,8 +126,8 @@
             "browserTarget": "IoTHubSPA:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "IoTHubSPA:build:production"
+            "prod": {
+              "browserTarget": "IoTHubSPA:build:prod"
             },
             "staging": {
               "browserTarget": "IoTHubSPA:build:staging"
@@ -181,8 +181,8 @@
             "devServerTarget": "IoTHubSPA:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "IoTHubSPA:serve:production"
+            "prod": {
+              "devServerTarget": "IoTHubSPA:serve:prod"
             }
           }
         }

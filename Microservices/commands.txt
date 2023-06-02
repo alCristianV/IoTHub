@@ -16,5 +16,6 @@ docker compose --file docker-compose-prod.yml push
 -- testing
 docker compose --file docker-compose-staging.yml build –-no-cache
 docker compose --file docker-compose-staging.yml up -d --force-recreate
+
 docker build -–no-cache -t test -f Dockerfile.linux.staging .
 docker run --name test-container -d -p 8888:80 test
