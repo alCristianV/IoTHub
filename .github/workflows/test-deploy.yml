@@ -14,8 +14,8 @@ jobs:
     
       - name: Start dependencies (docker-compose)
         run: |
-          docker-compose up -d  
-        working-directory: ./Microservices
+          docker compose --file docker-compose-staging.yml up -d 
+        working-directory: .
 
       - name: Install .NET Core SDK
         uses: actions/setup-dotnet@v1
