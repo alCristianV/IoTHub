@@ -99,7 +99,7 @@ jobs:
           containerAppName: iothub-frontend
           resourceGroup: disertatie
           imageToBuild: cristian25/iothub-frontend:${{ github.sha }}
-          dockerfilePath: Dockerfile.linux.dev
+          dockerfilePath: Dockerfile.linux.prod
         
         
       - name: Azure Login Auth Service
