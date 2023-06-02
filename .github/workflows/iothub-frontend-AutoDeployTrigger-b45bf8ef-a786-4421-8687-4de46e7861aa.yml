@@ -1,0 +1,42 @@
+name: Trigger auto deployment for iothub-frontend
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - 'WebSinglePageAngularApp/Dockerfile.dev/**'
+    - '.github/workflows/iothub-frontend-AutoDeployTrigger-b45bf8ef-a786-4421-8687-4de46e7861aa.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.IOTHUBFRONTEND_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/WebSinglePageAngularApp/Dockerfile.dev 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.IOTHUBFRONTEND_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.IOTHUBFRONTEND_REGISTRY_PASSWORD }}
+          containerAppName: iothub-frontend
+          resourceGroup: disertatie
+          imageToBuild: cristian25/iothub-frontend:${{ github.sha }}
+          dockerfilePath: Dockerfile
+
+     
+
