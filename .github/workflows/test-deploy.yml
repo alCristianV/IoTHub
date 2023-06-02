@@ -99,6 +99,6 @@ jobs:
           containerAppName: iothub-frontend
           resourceGroup: disertatie
           imageToBuild: cristian25/iothub-frontend:${{ github.sha }}
-          dockerfilePath: Dockerfile.dev
+          dockerfilePath: Dockerfile.linux.dev
           
       
