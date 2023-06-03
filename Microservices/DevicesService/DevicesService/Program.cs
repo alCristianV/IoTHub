@@ -20,8 +20,10 @@ builder.Services.Configure<IotHubDatabaseSettings>(
                 builder.Configuration.GetSection(nameof(IotHubDatabaseSettings)));
 builder.Services.AddSingleton<IIotHubDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<IotHubDatabaseSettings>>().Value);
+builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<IDeviceDataFieldRepository, DeviceDataFieldRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IActionRepository, ActionRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
