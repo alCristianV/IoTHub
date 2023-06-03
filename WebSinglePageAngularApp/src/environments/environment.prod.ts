@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
 
   authDomain:
     'authservice.greenflower-4193fb10.northeurope.azurecontainerapps.io',
@@ -21,9 +21,13 @@ export const environment = {
   notificationsService:
     'https://notificationsservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/notifications/',
 
-  statisticsDomain: 'localhost:8085',
-  statisticsService: 'http://localhost:8085/api/statistics/',
-  hubUrl: 'http://localhost:8082/hubs/',
+  statisticsDomain:
+    'statisticsservice.greenflower-4193fb10.northeurope.azurecontainerapps.io',
+  statisticsService:
+    'https://statisticsservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/statistics/',
+
+  hubUrl:
+    'https://devicesservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/hubs/',
   // apiUrl: 'http://192.168.0.104:5000/api/',
   // hubUrl: 'http://192.168.0.104:5000/hubs/'
 };
