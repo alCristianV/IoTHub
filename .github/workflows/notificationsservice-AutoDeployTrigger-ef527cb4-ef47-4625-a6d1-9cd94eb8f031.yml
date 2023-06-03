@@ -1,0 +1,42 @@
+name: Trigger auto deployment for notificationsservice
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/notificationsservice-AutoDeployTrigger-ef527cb4-ef47-4625-a6d1-9cd94eb8f031.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.NOTIFICATIONSSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.NOTIFICATIONSSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.NOTIFICATIONSSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: notificationsservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/notificationsservice:${{ github.sha }}
+          
+
+     
+
