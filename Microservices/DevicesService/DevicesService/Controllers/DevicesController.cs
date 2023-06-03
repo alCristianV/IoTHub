@@ -6,9 +6,11 @@ using IoTHubAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using MongoDB.Driver.Core.Configuration;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace IoTHubAPI.Controllers
 {
@@ -120,7 +122,8 @@ namespace IoTHubAPI.Controllers
             }
 
             deviceToAdd.UserId = userId;
-            deviceToAdd.ConnectionString = Generator.EncryptString(userId, DateTime.Now.ToString());
+            string connectionString = Regex.Replace(Generator.EncryptString(userId, DateTime.Now.ToString()), "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
+            deviceToAdd.ConnectionString = connectionString;
             await _devicesRepo.AddDevice(deviceToAdd);
 
             DeviceForListDto deviceForList = _mapper.Map<DeviceForListDto>(deviceToAdd);
