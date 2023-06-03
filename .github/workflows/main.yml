@@ -180,7 +180,7 @@ jobs:
       - name: Build and push container image to registry  Statistics Service
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: ${{ github.workspace }}/StatisticsService
+          appSourcePath: ${{ github.workspace }}/Microservices/StatisticsService
           registryUrl: docker.io
           registryUsername: ${{ secrets.STATISTICSSERVICE_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.STATISTICSSERVICE_REGISTRY_PASSWORD }}
