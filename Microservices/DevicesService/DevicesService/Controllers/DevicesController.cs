@@ -513,14 +513,16 @@ namespace IoTHubAPI.Controllers
             _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
             //var response = await _httpClient.GetFromJsonAsync<User>(_usersServiceUrl + userId);
 
+            var stringContent = new StringContent($"\"{email}\"", Encoding.UTF8, "application/json");
+            //stringContent.Headers.ContentType.CharSet = string.Empty;
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri(_usersServiceUrl + "/GetUserByEmail"),
-                Content = new StringContent(email),
+                RequestUri = new Uri(_usersServiceUrl + "GetUserByEmail"),
+                Content = stringContent,
             };
 
-            Console.WriteLine(_usersServiceUrl + "/GetUserByEmail");
+            Console.WriteLine(_usersServiceUrl + "GetUserByEmail");
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             Console.WriteLine(response);
             var responseContent = await response.Content.ReadAsStringAsync();
