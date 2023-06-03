@@ -186,7 +186,6 @@ namespace IoTHubAPI.Controllers
             device.Collaborators.RemoveAll(c => c.Id == collaboratorId);
             await _devicesRepo.UpdateDevice(deviceId, device);
 
-            await _devicesRepo.UpdateDevice(deviceId, device);
             var (username, userId) = GetUserCredentials();
             await PostNotification(new Notification() { UserId = collaboratorId, Text = $"You are no longer a collaborator of {device.Name} device" });
             return Ok(device);
@@ -536,7 +535,10 @@ namespace IoTHubAPI.Controllers
         {
             Request.Headers.TryGetValue("Authorization", out StringValues headerValue);
             Console.WriteLine(headerValue);
-            _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
+            if (!_httpClient.DefaultRequestHeaders.Contains("Authorization"))
+            {
+                _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
+            }
             //var response = await _httpClient.GetFromJsonAsync<User>(_usersServiceUrl + userId);
 
             var request = new HttpRequestMessage
