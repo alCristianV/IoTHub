@@ -154,4 +154,21 @@ jobs:
           resourceGroup: disertatie
           imageToBuild: cristian25/devicesservice:${{ github.sha }}
           dockerfilePath: /DevicesService/Dockerfile
+          
+      - name: Azure Login Notification Service
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.NOTIFICATIONSSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry Notification Service
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/Microservices/NotificationService
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.NOTIFICATIONSSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.NOTIFICATIONSSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: notificationsservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/notificationsservice:${{ github.sha }}
+          dockerfilePath: /NotificationService/Dockerfile
       
