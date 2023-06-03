@@ -1,0 +1,42 @@
+name: Trigger auto deployment for statisticsservice
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/statisticsservice-AutoDeployTrigger-4d7f80f3-a332-4a4d-8878-91007da73b85.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.STATISTICSSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.STATISTICSSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.STATISTICSSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: statisticsservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/statisticsservice:${{ github.sha }}
+          
+
+     
+

@@ -171,4 +171,21 @@ jobs:
           resourceGroup: disertatie
           imageToBuild: cristian25/notificationsservice:${{ github.sha }}
           dockerfilePath: /NotificationService/Dockerfile
+          
+      - name: Azure Login Statistics Service
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.STATISTICSSERVICE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry  Statistics Service
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/StatisticsService
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.STATISTICSSERVICE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.STATISTICSSERVICE_REGISTRY_PASSWORD }}
+          containerAppName: statisticsservice
+          resourceGroup: disertatie
+          imageToBuild: cristian25/statisticsservice:${{ github.sha }}
+          dockerfilePath: /StatisticsService/Dockerfile
       
