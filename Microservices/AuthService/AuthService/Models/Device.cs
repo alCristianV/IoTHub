@@ -14,11 +14,15 @@ namespace IoTHubAPI.Models
         [Required]
         public string Id { get; set; }
 
+        public string UserId { get; set; }
+
         [Required]
         public string ConnectionString { get; set; }
 
         [Required]
         public string Name { get; set; }
+
+        public List<UserInfoDto> Collaborators { get; set; }
 
     }
 }
