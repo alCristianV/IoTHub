@@ -22,7 +22,7 @@ namespace IoTHubAPI.Repositories
         }
 
         public async Task<DeviceDataField> GetDataField(string dataFieldId) {
-            var field = await _deviceDataFields.FindAsync(d => d.Id == dataFieldId);
+             var field = await _deviceDataFields.FindAsync(d => d.Id == dataFieldId);
             return await field.FirstOrDefaultAsync();
         }
     }

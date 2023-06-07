@@ -35,7 +35,7 @@
 .inline{
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .inline-space{
@@ -56,4 +56,21 @@
 
 .error{
   color: red;
+}
+
+
+.custom-card{
+  padding: 15px !important;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.yellow{
+  color: var(--yellow);
+}
+
+.success{
+  color: var(--success);
 }

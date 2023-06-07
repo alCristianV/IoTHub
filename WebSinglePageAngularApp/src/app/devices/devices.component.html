@@ -1,12 +1,61 @@
 <div class="container">
   <div class="inline mt-4 mb-2">
-  <h2 class="mb-0">My Devices</h2>
-  <button type="button" class="btn btn-primary" (click)="openDialog('Add',{})">
-    <i class="fa fa-plus mr-1"></i>Create Device
-  </button>
-</div>
+    <h2 class="mb-0">My Devices</h2>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="openDialog('Add', {})"
+    >
+      <i class="fa fa-plus mr-1"></i>Create Device
+    </button>
+  </div>
 
-<table class="table table-hover top-borderless no-padding-left">
+  <div *ngIf="dataSource.length != 0; else elseDevices">
+    <div class="row">
+      <div class="col-sm-6 custom-card" *ngFor="let device of dataSource">
+        <div
+          class="card"
+          [ngClass]="{
+            'border-success': (presence.onlineDevices$ | async).includes(
+              device.id
+            )
+          }"
+        >
+          <div class="card-body">
+            <div>
+              <a
+                class="nav-link list-link card-title stretched-link"
+                [routerLink]="['/devices/', device.id]"
+              >
+                <h2>
+                  <i class="fa fa-microchip primary"></i> {{ device.name }}
+                </h2></a
+              >
+              <p class="text-muted">{{ device.user.email }}</p>
+            </div>
+            <div
+              *ngIf="
+                (presence.onlineDevices$ | async).includes(device.id);
+                else elseOffline
+              "
+            >
+              <i style="color: rgb(0, 223, 0)" class="fa fa-circle"> Online</i>
+            </div>
+            <ng-template #elseOffline>
+              <i style="color: rgb(185, 185, 185)" class="fa fa-circle">
+                Offline</i
+              >
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseDevices>
+    <p class="d-flex justify-content-center header-font">No Devices Yet...</p>
+  </ng-template>
+
+  <!-- <table class="table table-hover top-borderless no-padding-left">
   <thead>
     <th class="header-font" *ngFor = "let column of displayedColumns">
       {{column}}
@@ -30,6 +79,5 @@
       </td>
     </tr>
   </tbody>
-</table>
-
+</table> -->
 </div>

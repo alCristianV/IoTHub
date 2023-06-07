@@ -1,5 +1,7 @@
+.nav-bar{
+    //background-color: var(--nav-blue) !important;
+
 .navbar-brand{
-    font-size: large;
     font-weight: bold;
     
 }
@@ -10,4 +12,9 @@
 
 .nav-item{
     cursor: pointer;
+}
+
+.white-text{
+    color: white;
+}
 }
