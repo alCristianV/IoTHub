@@ -8,6 +8,10 @@ import requests
 import requests
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 
+authUrl = "https://authservice.greenflower-4193fb10.northeurope.azurecontainerapps.io/api/auth/device"
+devicesUrl = "https://devicesservice.greenflower-4193fb10.northeurope.azurecontainerapps.io"
+#devicesUrl = "http://localhost:8082"
+
 def send(data):
     try:
         code = data[0]['code']
@@ -32,19 +36,17 @@ def change(data):
 
 def signalr_core_login(connectionString):
     d={'connectionString': connectionString}
-    response = requests.post("http://localhost:5000/api/auth/device",params={"connectionString" : connectionString}, verify=False)
+    response = requests.post(authUrl,params={"connectionString" : connectionString}, verify=False)
     return response.json()["token"]
 
 
 argConnStr = sys.argv[1]
 connection_string = argConnStr
-#connection_string = 'hGT93cX9hVyB6uuKSfkyMP+rKlI0IiXSH8B+lvwedf4='
 bearer = signalr_core_login(connection_string)
-ip = 'http://localhost:5000'
 
 def getDeviceFields(connectionString):
     print(bearer)
-    r =requests.get( ip + '/api/devices/GetConnDeviceFields/',params={"connectionString" : connectionString}, headers={"Authorization" : "Bearer " + bearer})
+    r =requests.get( devicesUrl + '/api/devices/GetConnDeviceFields/',params={"connectionString" : connectionString}, headers={"Authorization" : "Bearer " + bearer})
     print(r.reason)
     fields = r.json()
     return fields
@@ -73,7 +75,7 @@ def execFieldCode(field):
         return field
 
 hub_connection = HubConnectionBuilder()\
-    .with_url(ip + "/hubs/message",
+    .with_url(devicesUrl + "/hubs/message",
 	options={
 	"headers": {
 	    "Authorization" : "Bearer " + bearer
@@ -87,7 +89,7 @@ hub_connection = HubConnectionBuilder()\
     }).build()
 	
 hub_connection2 = HubConnectionBuilder()\
-    .with_url(ip + "/hubs/presence",
+    .with_url(devicesUrl + "/hubs/presence",
 	options={
 	"headers": {
 	    "Authorization" : "Bearer " + bearer
