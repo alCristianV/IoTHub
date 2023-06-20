@@ -84,7 +84,14 @@ namespace IoTHubAPI.Controllers
             foreach (var device in devices)
             {
                 DeviceForListDto deviceToAdd = _mapper.Map<DeviceForListDto>(device);
-                deviceToAdd.User = _mapper.Map<UserForListDto>(user);
+                if(user.Id != device.UserId) {
+                    User? deviceOwner = await GetUserById(device.UserId);
+                    deviceToAdd.User = _mapper.Map<UserForListDto>(deviceOwner);
+                }
+                else
+                {
+                    deviceToAdd.User = _mapper.Map<UserForListDto>(user);
+                }
                 devicesForList.Add(deviceToAdd);
             }
             return Ok(devicesForList);
