@@ -84,7 +84,7 @@ namespace IoTHubAPI.Controllers
             foreach (var device in devices)
             {
                 DeviceForListDto deviceToAdd = _mapper.Map<DeviceForListDto>(device);
-                if(user.Id != device.UserId) {
+                if(!user.Id.Equals(device.UserId)) {
                     User? deviceOwner = await GetUserById(device.UserId);
                     deviceToAdd.User = _mapper.Map<UserForListDto>(deviceOwner);
                 }
@@ -502,7 +502,10 @@ namespace IoTHubAPI.Controllers
         {
             Request.Headers.TryGetValue("Authorization", out StringValues headerValue);
             Console.WriteLine(headerValue);
-            _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
+            if (!_httpClient.DefaultRequestHeaders.Contains("Authorization"))
+            {
+                _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
+            }
             //var response = await _httpClient.GetFromJsonAsync<User>(_usersServiceUrl + userId);
 
             Console.WriteLine(_usersServiceUrl + userId);
@@ -519,7 +522,10 @@ namespace IoTHubAPI.Controllers
         {
             Request.Headers.TryGetValue("Authorization", out StringValues headerValue);
             Console.WriteLine(headerValue);
-            _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
+            if (!_httpClient.DefaultRequestHeaders.Contains("Authorization"))
+            {
+                _httpClient.DefaultRequestHeaders.Add("Authorization", headerValue.ToString());
+            }
             //var response = await _httpClient.GetFromJsonAsync<User>(_usersServiceUrl + userId);
 
             var stringContent = new StringContent($"\"{email}\"", Encoding.UTF8, "application/json");
