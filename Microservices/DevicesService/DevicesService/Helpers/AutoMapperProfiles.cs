@@ -17,6 +17,7 @@ namespace IoTHubAPI.Helpers
             CreateMap<DeviceDataField, DeviceDataFieldListDto>().ReverseMap();
             CreateMap<Models.Action, ActionDto>().ReverseMap();
             CreateMap<Models.Action, ActionListDto>().ReverseMap();
+            CreateMap<ActionDto, ActionListDto>().ReverseMap();
         }
     }
 }
